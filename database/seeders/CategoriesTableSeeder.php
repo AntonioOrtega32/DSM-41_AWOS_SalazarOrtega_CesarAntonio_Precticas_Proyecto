@@ -22,5 +22,14 @@ class CategoriesTableSeeder extends Seeder
          $category2 = new Category;
          $category2->nombrecategoria = "Utilitarios";
          $category2->save();
+
+         $category3 = new Category;
+         $category3->nombrecategoria = "Comprimidos";
+         $category3->save();
+
+
+         $category4 = new Category;
+         $category4->nombrecategoria = "Complementos";
+         $category4->save();
         }
 }

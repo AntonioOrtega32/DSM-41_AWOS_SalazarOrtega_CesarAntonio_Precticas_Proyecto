@@ -18,11 +18,12 @@ class ProductFactory extends Factory
     {
         return [
             //
-            'producto' => $this -> faker -> name(),
-            'capvolumetrica' => $this -> faker -> name(),
+            'producto' => $this -> faker ->company(),
+            'capvolumetrica' => $this -> faker -> randomNumber(),
             'numempaques' => $this -> faker -> randomNumber(),
             'preciounitario' => $this -> faker -> randomNumber(),
-            'category_id' => $this -> faker -> randomElement([1])
+            'imagen'=> $this -> faker -> randomLetter(),
+            'category_id' => $this -> faker -> randomElement([1,2,3,4])
             
         ];
     }

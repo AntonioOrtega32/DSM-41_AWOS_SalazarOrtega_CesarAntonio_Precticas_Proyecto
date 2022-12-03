@@ -49,12 +49,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $users)
     {
-        //
+        return view('/usuarios/showusu', compact('users')); /* ← Esta parte del controlador funciona para mostrar los datos (NO MOVER!!!!) */
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -90,8 +90,15 @@ class UserController extends Controller
 
      /*↓ En esta parte se declara las variables de envio */
     
-     public function creaUser(Request $request){
+     public function creaUser(Request $request){/* ← Ademas este hace la funcion del Store!!! */
         $user = new User;
+
+
+        $request->validate([
+            'Nom'=>'required',
+            'Passw'=>'required',  /* Validacion de datos!! */
+            'Email'=>'required',
+        ]);
 
     /*↓ Aqui se mandana llamar las varibles del formulario! 
         y los valores de la tabla*/
@@ -105,11 +112,35 @@ class UserController extends Controller
         return redirect()->route('users');
     }
 
-    /* ↓Esta funcion elimina los registros de la BD */
-public function delete($users_id){ 
- 
-    $users = User::find($users_id);
-    $users -> delete();
-    return redirect()->route('users');
-}
+    public function view($user_id){
+
+        $user = User::find($user_id);
+
+        return view('/usuarios/upusu',['user'=>$user]);
+
+    }
+
+    public function updateUser(Request $request){
+        $user = User::find($request->user_id);
+
+        
+        $user->name = $request->Nom;
+        $user->email = $request->Email;
+        $user->password = $request->Passw; 
+        
+        $user->save();
+        
+        return redirect()->route('users');
+    }
+
+    public function deleteUser($user_id)
+    {
+        $user = User::find($user_id);
+        $user -> delete();
+
+        return redirect()->route('users');
+
+    }
+
+
 }

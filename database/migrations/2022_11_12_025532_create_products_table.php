@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('capvolumetrica');
             $table->integer('numempaques');
             $table->integer('preciounitario');
+            $table->string('imagen');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();

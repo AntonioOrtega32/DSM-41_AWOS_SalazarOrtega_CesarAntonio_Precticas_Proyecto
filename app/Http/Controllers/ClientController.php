@@ -50,9 +50,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $clients)
     {
-        //
+        return view('/clientes/showcli', compact('clients')); /* ← Esta parte del controlador funciona para mostrar los datos (NO MOVER!!!!) */
     }
 
     /**
@@ -61,9 +61,8 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $clients)
     {
-        //
     }
 
     /**
@@ -73,9 +72,9 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $clients)/* ← Ademas este hace la funcion del Store!!! */
     {
-        //
+
     }
 
     /**
@@ -94,6 +93,12 @@ class ClientController extends Controller
     public function creaClient(Request $request){
         $client = new Client;
 
+
+        $request->validate([
+            'Nom'=>'required',
+            'Tel'=>'required',
+            'Email'=>'required',
+        ]);
     /*↓ Aqui se mandana llamar las varibles del formulario! 
         y los valores de la tabla*/
 
@@ -110,12 +115,39 @@ class ClientController extends Controller
         return redirect()->route('clients');
     }
 
-    public function delete($clients_id){ 
- 
-        $client = Client::find($clients_id);
+    public function view($client_id){
+
+        $client = Client::find($client_id);
+
+        return view('/clientes/upcli',['client'=>$client]);
+
+    }
+
+    public function updateClient(Request $request){
+        $client = Client::find($request->client_id);
+
+        
+        $client->nombre = $request->Nom;
+        $client->apPaterno = $request->Apat;
+        $client->apMaterno = $request->Amat;
+        $client->telefono = $request->Tel;
+        $client->email = $request->Email;
+        $client->direccion = $request->Dir;
+        $client->password = $request->Passw;
+
+        $client->save();
+        
+        return redirect()->route('clients');
+    }
+
+    public function deleteClient($client_id)
+    {
+        $client = Client::find($client_id);
         $client -> delete();
 
         return redirect()->route('clients');
+
     }
+
 }
  

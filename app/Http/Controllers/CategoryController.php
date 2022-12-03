@@ -40,7 +40,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         //
     }
 
@@ -50,9 +50,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $categories)
     {
-        //
+        return view('/categorias/showcat', compact('categories')); /* ← Esta parte del controlador funciona para mostrar los datos (NO MOVER!!!!) */
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
     }
 /*↓ En esta parte se declara las variables de envio */
     
-public function creaCategory(Request $request){
+public function creaCategory(Request $request){/* ← Ademas este hace la funcion del Store!!! */
     $category = new Category;
 
 /*↓ Aqui se mandana llamar las varibles del formulario! 
@@ -102,11 +102,36 @@ public function creaCategory(Request $request){
     
     return redirect()->route('categories');
 }
-public function delete($categories_id){ 
- 
-    $category = Category::find($categories_id);
-    $category -> delete();
+
+public function view($category_id){
+
+    $category = Category::find($category_id);
+
+    return view('/categorias/upcat',['category'=>$category]);
+
+}
+
+public function updateCategory(Request $request){/* ← Ademas este hace la funcion del Store!!! */
+    $category = Category::find($request->category_id);
+
+/*↓ Aqui se mandana llamar las varibles del formulario! 
+    y los valores de la tabla*/
+
+    $category->nombrecategoria = $request->Nomcat;
+  
+    $category->save();
+    
     return redirect()->route('categories');
 }
+
+public function deleteCategory($category_id)
+    {
+        $category = Category::find($category_id);
+        $category -> delete();
+
+        return redirect()->route('categories');
+
+    }
+
 
 }

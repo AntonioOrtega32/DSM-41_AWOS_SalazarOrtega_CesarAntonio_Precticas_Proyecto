@@ -1,29 +1,37 @@
+@include('layouts.partials.header')
+
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h2>Editar producto: </h2>
+        </div>
+        <div class="pull-right"> 
+            <a class="btn btn-primary" href="{{url('/products')}}"> Volver </a>
+        </div>
+    </div>
+</div>
 
 
-<!-- Aqui se asigna el metodo POST y la ruta de la accion! -->
-<form action="{{route('createProduct')}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('updateProduct')}}" method="POST">
   @csrf
+  <input type="hidden" name="product_id" value="{{$products->id}}">
   <div class="align-items-center">
         
         <div class="mb-3">
         <label for="Nombre" class="form-label">Nombre Producto</label>
-        <input type="text" class="form-control" name="Prod">
+        <input type="text" class="form-control" value="{{$products->producto}}" name="Prod">
       </div>
       <div class="mb-3">
         <label for="Apaterno" class="form-label">Capcidad Volumetrica</label>
-        <input type="text" class="form-control" name="Vol">
+        <input type="text" class="form-control" name="Vol"  value="{{$products->capvolumetrica}}">
       </div>
       <div class="mb-3">
         <label for="Amaterno" class="fcorm-label">Numero de empaques</label>
-        <input type="text" class="form-control" name="Empaque">
+        <input type="text" class="form-control" name="Empaque"  value="{{$products->numempaques}}">
       </div>
       <div class="mb-3">
         <label for="Teleono" class="fcorm-label">Precio Unitario</label>
-        <input type="text" class="form-control" name="Pres">
-      </div>
-      <div class="mb-3">
-        <label for="Teleono" class="fcorm-label">Imagen referencial</label>
-        <input type="file" class="form-control" name="imagen" placeholder="imagen">
+        <input type="text" class="form-control" name="Pres"  value="{{$products->preciounitario}}">
       </div>
       <div class="mb-3">
         <label for="Categoria" class="fcorm-label">Categoria</label>
@@ -39,3 +47,7 @@
       <button type="submit" class="btn btn-success">Enviar</button>
     </div>  
     </form> 
+
+
+
+@include('layouts.partials.footer')

@@ -3,7 +3,7 @@
 
 <h1>Aqui va la tabla clientes</h1>
 
-<a href="{{url('/clients/createcli')}}" class="btn btn-info" role="button" data-bs-toggle="button">Agregar Datos</a>
+<a href="{{url('/clients/createcli')}}" class="btn btn-info" role="button" data-bs-toggle="button"><i class="fas fa-plus"></i> Agregar Datos</a>
 <table class="table table-striped-columns">
     <thead class="table-dark">
         <tr>
@@ -29,8 +29,14 @@
             <th>{{$clients->email}}</th>
             <th>{{$clients->direccion}}</th>
             <th>{{$clients->password}}</th>
-            <th><a href="{{route('deleteClient',$clients->id)}}" class="btn btn-danger" tabindex="-1" role="button" aria-disabled="true">Eliminar</a>
-                <a href="#" class="btn btn-success" tabindex="-1" role="button" aria-disabled="true">Editar</a></th>
+            <th><form action="" method="POST">
+                <a class="btn btn-info" href="{{route('showcli',$clients->id)}}">Mostrar <i class="far fa-eye"></i></a>
+                <a class="btn btn-primary" href="{{route('viewcli',$clients->id)}}">Editar <i class="fas fa-user-edit"></i></a>
+
+                @csrf
+                @method('DELETE')
+                <a class="btn btn-danger" href="{{route('delcli',$clients->id)}}">Eliminar <i class="fas fa-users-slash"></i></a>
+            </form></th>
         </tr>      
         @empty
             <tr>

@@ -3,7 +3,7 @@
 <h1>Aqui va la tabla usuarios </h1>
 
 <!-- Aqui es el boton que manda a la vista del fromulario -->
-<a href="{{url('/users/createusu')}}" class="btn btn-info" role="button" data-bs-toggle="button">Agregar Datos</a>
+<a href="{{url('/users/createusu')}}" class="btn btn-info" role="button" data-bs-toggle="button"><i class="fas fa-plus"></i> Agregar Datos</a>
 
 
 <table class="table table-striped-columns">
@@ -23,9 +23,15 @@
             <th>{{$users->name}}</th>
             <th>{{$users->email}}</th>
             <th>{{$users->password}}</th>
-            <th><a href="{{route('deleteUser',$users->id)}}" class="btn btn-danger" tabindex="-1" role="button" aria-disabled="true">Eliminar</a>
-                <a href="#" class="btn btn-succes" tabindex="-1" role="button" aria-disabled="true">Editar</a></th>
-            </tr>
+            <th>
+
+                <a class="btn btn-info" href="{{route('showusu',$users->id)}}">Mostrar <i class="far fa-eye"></i></a><!-- ← BOTON DE MOSTRAR (NO MOVER!!!)-->
+                <a class="btn btn-primary" href="{{route('viewusu',$users->id)}}">Editar <i class="fas fa-user-edit"></i></a>
+
+                @csrf
+                @method('DELETE')
+                <a class="btn btn-danger"  href="{{route('delusu', $users->id)}} ">Eliminar <i class="fas fa-users-slash"></i></a>
+
         </tr>      
         @empty 
             <tr>

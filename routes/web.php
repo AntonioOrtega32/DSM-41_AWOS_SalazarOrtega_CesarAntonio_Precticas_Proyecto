@@ -17,23 +17,37 @@ Route::get('/admin', function(){
 Route::get('/clients', [ClientController::class,'index'])->name('clients');
 Route::get('/clients/createcli', [ClientController::class,'create']);
 Route::post('/clients/creaClient', [ClientController::class,'creaClient'])->name('createClient');
-Route::get('/delete/{clients_id}', [ClientController::class,'delete'])->name('deleteClient');/* ← Elimina los registros de la base de datos (Da errores actualmente)*/
+Route::get('/clients/showcli/{clients}', [ClientController::class,'show'])->name('showcli');
+Route::get('/clients/view/{clients_id}', [ClientController::class,'view'])->name('viewcli');
+Route::post('/clients/updateClient', [ClientController::class,'updateClient'])->name('updateClient');
+Route::get('/clients/deleteClient/{clients_id}', [ClientController::class,'deleteClient'])->name('delcli');
+
+
 
 /*↓Aqui son las vistas de productos*/
 Route::get('/products', [ProductController::class,'index'])->name('products');
 Route::get('/products/createpro', [ProductController::class, 'create']);
 Route::post('/products/creaProduct', [ProductController::class,'creaProduct'])->name('createProduct');
-Route::get('/delete/{products_id}', [ProductController::class,'delete'])->name('deleteProduct');/* ← Elimina los registros de la base de datos*/
+Route::get('/products/showpro/{products}', [ProductController::class,'show'])->name('showpro');
+Route::get('/products/view/{product_id}', [ProductController::class,'view'])->name('viewpro');
+Route::post('/Products/updateProduct', [ProductController::class,'updateProduct'])->name('updateProduct');
+Route::get('/products/deleteProduct/{product_id}', [ProductController::class,'deleteProduct'])->name('delpro');
 
 /*↓Aqui son las vistas de Usuario*/
 Route::get('/users', [UserController::class,'index'])->name('users');
 Route::get('/users/createusu', [UserController::class,'create']);
 Route::post('/users/creaUser', [UserController::class,'creaUser'])->name('createUser');
-Route::get('/delete/{users_id}', [UserController::class,'delete'])->name('deleteUser');/* ← Elimina los registros de la base de datos*/
+Route::get('/users/showusu/{users}', [UserController::class,'show'])->name('showusu');
+Route::get('/users/view/{user_id}', [UserController::class,'view'])->name('viewusu');
+Route::post('/users/updateUser', [UserController::class,'updateUser'])->name('updateUser');
+Route::get('/users/deleteUser/{user_id}', [UserController::class,'deleteUser'])->name('delusu');
+
 
 /*↓Aqui son las vistas de categorias*/
 Route::get('/categories', [CategoryController::class,'index'])->name('categories');
 Route::get('/categories/createcat', [CategoryController::class,'create']);
 Route::post('/categories/creaCategory', [CategoryController::class,'creaCategory'])->name('createCategory');
-Route::get('/delete/{categories_id}', [CategoryController::class,'delete'])->name('deleteCategory');/* ← Elimina los registros de la base de datos*/
- 
+Route::get('/categories/showcat/{categories}', [CategoryController::class,'show'])->name('showcat');
+Route::get('/categories/view/{category_id}', [CategoryController::class,'view'])->name('viewcat');
+Route::post('/categories/updateCategory', [CategoryController::class,'updateCategory'])->name('updateCategory');
+Route::get('/categories/deleteCategory/{category_id}', [CategoryController::class,'deleteCategory'])->name('delcat');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         //↓ Aqui se manda a llamar a todos los campos de la tabla
-        $products = Product::all();
+        $products = Product::orderBy('id','desc')->get();
        
         //↓ Retorna la vista!
         return view('/productos/products', ['products'=>$products]);
@@ -31,8 +32,8 @@ class ProductController extends Controller
     public function create()
     {
         //↓ Aqui se manda a llamar la vista de creacion o de formulario
-        $categoria = Category::all();
-        return view('/productos/createpro',['categoria'=>$categoria]);
+        $categorias = Category::all();
+        return view('/productos/createpro',['categorias'=>$categorias]);
     }
 
     /**
@@ -41,9 +42,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeProduct(Request $request)
     {
-        //
+        //$products = new Product;
     }
 
     /**
@@ -52,9 +53,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $products)
     {
-        //
+        return view('/productos/showpro', compact('products')); 
     }
 
     /**
@@ -91,27 +92,69 @@ class ProductController extends Controller
         //
     }
         /*↓ En esta parte se declara las variables de envio */
-    public function creaProduct(Request $request){
-        $product = new Product();
+    public function creaProduct(Request $request){/* ← Ademas este hace la funcion del Store!!! */
+        
+        $request->validate([
+            'Prod'=>'required',
+            'imagen'=>'required'
+        ]);
+        
+        $input = $request->all();
+        if ($request->hasFile('imagen')) {
+            $products['imagen']=$request->file('imagen')->store('uploads','public');
+        }
+
+
+        $products = new Product();
 
         /*↓ Aqui se mandana llamar las varibles del formulario! 
         y los valores de la tabla*/
 
-        $product->producto = $request->Prod;
-        $product->capvolumetrica = $request->Vol;
-        $product->numempaques = $request->Empaque;
-        $product->preciounitario = $request->Pres;
-        $product->category_id= $request->cat;
-        
-        $product->save();
+        $products->producto = $request->Prod;
+        $products->capvolumetrica = $request->Vol;
+        $products->numempaques = $request->Empaque;
+        $products->preciounitario = $request->Pres;
+        $products->imagen = $request->imagen;
+        $products->category_id= $request->cat;
+               
+
+        $products->save();
         
         return redirect()->route('products');
     }
 
+    public function view($product_id){
+        $products = Product::find($product_id);
 
-    public function delete($products_id){ 
- 
-        $product = Product::find($products_id);
-        $product -> delete();
-        return redirect()->route('products');}
+        $categorias = Category::all();
+        return view('/productos/uppro',['categorias'=>$categorias, 'products'=>$products]);
+    }
+   
+    public function updateProduct(Request $request){/* ← Ademas este hace la funcion del Store!!! */
+        
+        $products = Product::find($request->product_id);
+
+        /*↓ Aqui se mandana llamar las varibles del formulario! 
+        y los valores de la tabla*/
+
+        $products->producto = $request->Prod;
+        $products->capvolumetrica = $request->Vol;
+        $products->numempaques = $request->Empaque;
+        $products->preciounitario = $request->Pres;
+        $products->category_id= $request->cat;
+        
+        $products->save();
+        
+        return redirect()->route('products');
+    }    
+
+ public function deleteProduct($product_id)
+    {
+        $products = Product::find($product_id);
+        $products -> delete();
+
+        return redirect()->route('products');
+
+    }
+
 }
