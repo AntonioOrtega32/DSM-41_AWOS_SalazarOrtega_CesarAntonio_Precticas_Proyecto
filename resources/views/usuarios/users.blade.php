@@ -12,6 +12,7 @@
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">email</th>
+            <th scope="col">Foto</th>
             <th scope="col">Contraseña</th>
             <th scope="col">Acciones</th>
         </tr>
@@ -22,6 +23,7 @@
             <th>{{$users->id}}</th>
             <th>{{$users->name}}</th>
             <th>{{$users->email}}</th>
+            <th><img src="/img/post/{{$users->imagen}}" width="150px"></th>
             <th>{{$users->password}}</th>
             <th>
 

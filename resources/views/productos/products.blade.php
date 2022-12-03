@@ -1,6 +1,6 @@
 @include('layouts.partials.header')
        
-
+ 
                  
 <h1>Aqui va la tabla Productos</h1>
 
@@ -28,10 +28,7 @@
             <th>{{$products->producto}}</th>
             <th>{{$products->capvolumetrica}}</th>
             <th>{{$products->numempaques}}</th>
-            <th>
-                <img width="200px" src="{{asset('storage').'/'.$products->imagen}}" >
-            
-            </th>
+                <th><img src="/img/post/{{$products->imagen}}" width="150px"></th>           
             <th>{{$products->preciounitario}}</th>
             <th>{{$products->category_id}}</th>
             <th>

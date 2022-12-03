@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
@@ -99,11 +100,7 @@ class ProductController extends Controller
             'imagen'=>'required'
         ]);
         
-        $input = $request->all();
-        if ($request->hasFile('imagen')) {
-            $products['imagen']=$request->file('imagen')->store('uploads','public');
-        }
-
+       
 
         $products = new Product();
 
@@ -114,9 +111,18 @@ class ProductController extends Controller
         $products->capvolumetrica = $request->Vol;
         $products->numempaques = $request->Empaque;
         $products->preciounitario = $request->Pres;
-        $products->imagen = $request->imagen;
         $products->category_id= $request->cat;
-               
+
+        //script de imagen :p
+        if($request->hasFile('imagen')){
+            
+            $imagen = $request->file('imagen');
+            $nombreimagen = Str::slug($request->Prod).".".$imagen->guessExtension();
+            $ruta =public_path("img/post/");
+            $imagen->move($ruta,$nombreimagen);
+            $products->imagen = $nombreimagen;
+        }
+                       
 
         $products->save();
         

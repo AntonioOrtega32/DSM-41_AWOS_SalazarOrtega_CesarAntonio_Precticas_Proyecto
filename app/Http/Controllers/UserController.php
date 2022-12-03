@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -91,7 +92,7 @@ class UserController extends Controller
      /*↓ En esta parte se declara las variables de envio */
     
      public function creaUser(Request $request){/* ← Ademas este hace la funcion del Store!!! */
-        $user = new User;
+       $user = new User;
 
 
         $request->validate([
@@ -105,7 +106,17 @@ class UserController extends Controller
 
         $user->name = $request->Nom;
         $user->email = $request->Email;
-        $user->password = $request->Passw; 
+        $user->password = $request->Passw;
+        //script de imagen :p
+        
+        if($request->hasFile('imagen')){
+            
+            $imagen = $request->file('imagen');
+            $nombreimagen = Str::slug($request->Nom).".".$imagen->guessExtension();
+            $ruta =public_path("img/post/");
+            $imagen->move($ruta,$nombreimagen);
+            $user->imagen = $nombreimagen;
+        }
         
         $user->save();
         
